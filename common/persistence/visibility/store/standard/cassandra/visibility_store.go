@@ -185,7 +185,7 @@ func (v *visibilityStore) RecordWorkflowExecutionClosed(
 	ctx context.Context,
 	request *store.InternalRecordWorkflowExecutionClosedRequest,
 ) error {
-	batch := v.session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := v.session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 
 	// First, remove execution from the open table
 	batch.Query(templateDeleteWorkflowExecutionStarted,

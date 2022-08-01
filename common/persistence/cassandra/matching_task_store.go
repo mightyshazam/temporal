@@ -223,7 +223,7 @@ func (d *MatchingTaskStore) UpdateTaskQueue(
 		if expiryTTL >= maxCassandraTTL {
 			expiryTTL = maxCassandraTTL
 		}
-		batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+		batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 		batch.Query(templateUpdateTaskQueueQueryWithTTLPart1,
 			request.NamespaceID,
 			request.TaskQueue,
@@ -317,7 +317,7 @@ func (d *MatchingTaskStore) CreateTasks(
 	ctx context.Context,
 	request *p.InternalCreateTasksRequest,
 ) (*p.CreateTasksResponse, error) {
-	batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	namespaceID := request.NamespaceID
 	taskQueue := request.TaskQueue
 	taskQueueType := request.TaskType

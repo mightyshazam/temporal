@@ -147,7 +147,7 @@ func (m *MetadataStore) CreateNamespaceInV2Table(
 		return nil, err
 	}
 
-	batch := m.session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := m.session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	batch.Query(templateCreateNamespaceByNameQueryWithinBatchV2,
 		constNamespacePartition,
 		request.ID,
@@ -187,7 +187,7 @@ func (m *MetadataStore) UpdateNamespace(
 	ctx context.Context,
 	request *p.InternalUpdateNamespaceRequest,
 ) error {
-	batch := m.session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := m.session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	batch.Query(templateUpdateNamespaceByNameQueryWithinBatchV2,
 		request.Namespace.Data,
 		request.Namespace.EncodingType.String(),
@@ -235,7 +235,7 @@ func (m *MetadataStore) RenameNamespace(
 	}
 
 	// Step 2.
-	batch := m.session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := m.session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	batch.Query(templateCreateNamespaceByNameQueryWithinBatchV2,
 		constNamespacePartition,
 		request.Id,

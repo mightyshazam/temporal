@@ -245,7 +245,7 @@ func (d *MutableStateTaskStore) AddHistoryTasks(
 	ctx context.Context,
 	request *p.InternalAddHistoryTasksRequest,
 ) error {
-	batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 
 	if err := applyTasks(
 		batch,

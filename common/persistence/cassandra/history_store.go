@@ -111,7 +111,7 @@ func (h *HistoryStore) AppendHistoryNodes(
 	}
 
 	treeInfoDataBlob := request.TreeInfo
-	batch := h.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := h.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	batch.Query(v2templateInsertTree,
 		branchInfo.TreeId,
 		branchInfo.BranchId,
@@ -287,7 +287,7 @@ func (h *HistoryStore) DeleteHistoryBranch(
 	ctx context.Context,
 	request *p.InternalDeleteHistoryBranchRequest,
 ) error {
-	batch := h.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := h.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 	batch.Query(v2templateDeleteBranch, request.TreeId, request.BranchId)
 
 	// delete each branch range

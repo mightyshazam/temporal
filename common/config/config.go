@@ -41,6 +41,16 @@ import (
 	"go.temporal.io/server/common/telemetry"
 )
 
+// CassandraMode represents as enumeration of Cassandra compatible stores
+type CassandraMode = string
+
+const (
+	// CassandraModeCosmos represents Cosmos Cassandra API
+	CassandraModeCosmos CassandraMode = "cosmos"
+	// CassandraModeDefault represents standard Cassandra
+	CassandraModeDefault CassandraMode = "default"
+)
+
 type (
 	// Config contains the configuration for a set of temporal services
 	Config struct {
@@ -280,6 +290,7 @@ type (
 		DisableInitialHostLookup bool `yaml:"disableInitialHostLookup"`
 		// AddressTranslator translates Cassandra IP addresses, used for cases when IP addresses gocql driver returns are not accessible from the server
 		AddressTranslator *CassandraAddressTranslator `yaml:"addressTranslator"`
+		Mode              *CassandraMode              `yaml:"mode"`
 	}
 
 	// CassandraStoreConsistency enables you to set the consistency settings for each Cassandra Persistence Store for Temporal

@@ -376,7 +376,7 @@ func (d *MutableStateStore) CreateWorkflowExecution(
 	ctx context.Context,
 	request *p.InternalCreateWorkflowExecutionRequest,
 ) (*p.InternalCreateWorkflowExecutionResponse, error) {
-	batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 
 	shardID := request.ShardID
 	newWorkflow := request.NewWorkflowSnapshot
@@ -574,7 +574,7 @@ func (d *MutableStateStore) UpdateWorkflowExecution(
 	ctx context.Context,
 	request *p.InternalUpdateWorkflowExecutionRequest,
 ) error {
-	batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 
 	updateWorkflow := request.UpdateWorkflowMutation
 	newWorkflow := request.NewWorkflowSnapshot
@@ -709,7 +709,7 @@ func (d *MutableStateStore) ConflictResolveWorkflowExecution(
 	ctx context.Context,
 	request *p.InternalConflictResolveWorkflowExecutionRequest,
 ) error {
-	batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 
 	currentWorkflow := request.CurrentWorkflowMutation
 	resetWorkflow := request.ResetWorkflowSnapshot
@@ -976,7 +976,7 @@ func (d *MutableStateStore) SetWorkflowExecution(
 	ctx context.Context,
 	request *p.InternalSetWorkflowExecutionRequest,
 ) error {
-	batch := d.Session.NewBatch(gocql.LoggedBatch).WithContext(ctx)
+	batch := d.Session.NewBatch(gocql.UnloggedBatch).WithContext(ctx)
 
 	shardID := request.ShardID
 	setSnapshot := request.SetWorkflowSnapshot
